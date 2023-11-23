@@ -2,13 +2,13 @@
 
 Este projeto tem como objetivo projetar, implementar e gerenciar um ambiente de rede utilizando tecnologia Linux, com ênfase nos serviços de DHCP, DNS, Web, FTP, NFS, e virtualização com Vagrant e Docker.
 
-## Requisitos
+## Instalação
 
 Antes de começar, certifique-se de ter instalado os seguintes componentes:
 
-- [Vagrant](https://www.vagrantup.com/)
-- [VirtualBox](https://www.virtualbox.org/)
 - [Docker](https://www.docker.com/)
+- [VirtualBox](https://www.virtualbox.org/)
+- [Vagrant](https://www.vagrantup.com/)
 
 Clone o repositório em seu ambiente local:
 

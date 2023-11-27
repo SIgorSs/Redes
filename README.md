@@ -20,12 +20,12 @@ cd Redes
 Execute as VMs com o Vagrant:
 
 ```bash
-cd DHCP_Server
+cd dhcp-server
 vagrant up vm1
 ```
 
 ```bash
-cd DHCP_Cliente
+cd dhcp-client
 vagrant up vm2
 ```
 

@@ -43,7 +43,7 @@ ping 192.168.50.11  # Verifique a conectividade com a VM2 (vm2)
 exit
 
 ```
-s
+
 ## Servidor DHCP
 
 O DHCP (Dynamic Host Configuration Protocol) é um protocolo de rede que permite que os dispositivos obtenham automaticamente um endereço IP e outras configurações de rede quando se conectam a uma rede.

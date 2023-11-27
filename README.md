@@ -17,6 +17,33 @@ git clone https://github.com/SIgorSs/Redes.git
 cd Redes
 ```
 
+Execute as VMs com o Vagrant:
+
+```bash
+cd DHCP_Server
+vagrant up vm1
+```
+
+```bash
+cd DHCP_Cliente
+vagrant up vm2
+```
+
+Acesse a VM Execute Testes:
+
+```bash
+vagrant ssh vm1
+
+```
+
+Verifique a Configuração da Rede:
+
+```bash
+ping 192.168.50.11  # Verifique a conectividade com a VM2 (vm2)
+exit
+
+```
+s
 ## Servidor DHCP
 
 O DHCP (Dynamic Host Configuration Protocol) é um protocolo de rede que permite que os dispositivos obtenham automaticamente um endereço IP e outras configurações de rede quando se conectam a uma rede.
@@ -26,7 +53,8 @@ O DHCP (Dynamic Host Configuration Protocol) é um protocolo de rede que permite
 Para verificar o status do servidor DHCP, utilize o comando:
 
 ```bash
-docker logs dhcp-server
+sudo systemctl status isc-dhcp-server
+
 ```
 
 ## Servidor DNS
@@ -47,7 +75,7 @@ O servidor Apache HTTP Server é um servidor web de código aberto utilizado par
 
 ### Teste do Servidor
 
-Abra o navegador nesta página: [http://192.168.0.10:8080](http://192.168.0.10:8080)
+Abra o navegador nesta página: [http://localhost](http://localhost)
 
 ### Status do Servidor
 

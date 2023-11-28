@@ -1,18 +1,17 @@
 Vagrant.configure("2") do |config|
-    config.vm.define "vm1" do |vm1|
-      vm1.vm.box = "ubuntu/focal64"
-      vm1.vm.network "private_network", type: "dhcp"
-      
-      vm1.vm.provider "virtualbox" do |vb|
-        vb.memory = 2048
-        vb.cpus = 2
-      end
-      
-      vm1.vm.provision "shell", path: "dhcp-server/setup.sh"
-      vm1.vm.provision "shell", path: "services/dns/provision.sh"
-      vm1.vm.provision "shell", path: "services/web/provision.sh"
-      vm1.vm.provision "shell", path: "services/ftp/provision.sh"
-      vm1.vm.provision "shell", path: "services/nfs/provision.sh"
+  config.vm.define "vm1" do |vm1|
+    vm1.vm.box = "ubuntu/focal64"
+    vm1.vm.network "private_network", type: "dhcp", virtualbox__intnet: true, auto_config: false
+
+    vm1.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+      vb.cpus = 2
     end
+
+    vm1.vm.provision "shell", path: "./setup.sh"
+    vm1.vm.provision "shell", path: "../services/dns/provision.sh"
+    vm1.vm.provision "shell", path: "../services/web/provision.sh"
+    vm1.vm.provision "shell", path: "../services/ftp/provision.sh"
+    vm1.vm.provision "shell", path: "../services/nfs/provision.sh"
   end
-  
+end

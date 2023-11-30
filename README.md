@@ -17,7 +17,7 @@ git clone https://github.com/SIgorSs/Redes.git
 cd Redes
 ```
 
-Execute as VMs com o Vagrant:
+Inicie as Máquinas Virtuais:
 
 ```bash
 cd dhcp-server
@@ -29,18 +29,20 @@ cd dhcp-client
 vagrant up vm2
 ```
 
-Acesse a VM Execute Testes:
+Provisione as Máquinas Virtuais:
+
+```bash
+vagrant provision
+```
+
+Acesse as Máquinas Virtuais:
 
 ```bash
 vagrant ssh vm1
 
 ```
-
-Verifique a Configuração da Rede:
-
 ```bash
-ping 192.168.50.11  # Verifique a conectividade com a VM2 (vm2)
-exit
+vagrant ssh vm2
 
 ```
 
@@ -57,7 +59,7 @@ sudo systemctl status isc-dhcp-server
 
 ```
 
-## Servidor DNS
+## Servidor DNS (Bind9)
 
 Um servidor DNS (Domain Name System) é responsável por converter nomes de domínio em endereços IP.
 
@@ -66,7 +68,14 @@ Um servidor DNS (Domain Name System) é responsável por converter nomes de dom�
 Para verificar o status do servidor DNS, utilize o comando:
 
 ```bash
-docker logs bind9-container
+sudo systemctl status bind9
+```
+
+Teste a Resolução de Nomes:
+
+```bash
+nslookup teste.com
+
 ```
 
 ## Servidor Apache
@@ -75,34 +84,36 @@ O servidor Apache HTTP Server é um servidor web de código aberto utilizado par
 
 ### Teste do Servidor
 
-Abra o navegador nesta página: [http://localhost](http://localhost)
+Abra o navegador nesta página: [http://192.168.50.1](http://192.168.50.1)
 
 ### Status do Servidor
 
 Para verificar o status do servidor Apache, utilize o comando:
 
 ```bash
-docker logs apache-container
+sudo systemctl status apache2
+
 ```
 
 ## Servidor FTP
 
 O servidor FTP é um protocolo de rede utilizado para transferir arquivos entre um cliente e um servidor.
 
-### Teste do Servidor
-
-Abra o terminal e digite:
-
-```bash
-ftp admin@192.168.0.10
-```
-
 ### Status do Servidor
 
 Para verificar o status do servidor FTP, utilize o comando:
 
 ```bash
-docker logs ftp-container
+sudo systemctl status vsftpd
+```
+
+### Transfira um Arquivo via FTP:
+
+Para tranferir um arquivo via FTP, utilize o comando::
+
+```bash
+ftp 192.168.50.1
+
 ```
 
 ## Servidor NFS
@@ -114,5 +125,11 @@ O NFS é um protocolo de compartilhamento de arquivos que permite que um sistema
 Para verificar o status do servidor NFS, utilize o comando:
 
 ```bash
-docker logs nfs-test-server
+sudo systemctl status nfs-kernel-server
+```
+
+### Monte o Compartilhamento NFS no Cliente:
+
+```bash
+sudo mount ftp 192.168.50.1:/share /mnt/nfs-share
 ```

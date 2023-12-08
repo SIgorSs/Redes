@@ -1,135 +1,68 @@
-# Documentação - Trabalho Final - Administração de Redes
+# Configuração de Ambiente de Rede com Docker e Vagrant
 
-Este projeto tem como objetivo projetar, implementar e gerenciar um ambiente de rede utilizando tecnologia Linux, com ênfase nos serviços de DHCP, DNS, Web, FTP, NFS, e virtualização com Vagrant e Docker.
+Este repositório fornece os recursos necessários para configurar um ambiente de rede integrado, utilizando Docker e Vagrant. Ele abrange a implementação de servidores DHCP, DNS, Web (Apache), NFS e FTP, todos em um ambiente virtualizado para uma gestão e aprendizado simplificados.
+
+## Pré-requisitos
+Antes de começar, instale:
+- Vagrant
+- VirtualBox
+- Docker
 
 ## Instalação
 
-Antes de começar, certifique-se de ter instalado os seguintes componentes:
+1. **Clone o Repositório:**
+    ```bash
+    git clone https://github.com/SIgorSs/Redes.git
+    cd Redes
+    ```
 
-- [Docker](https://www.docker.com/)
-- [VirtualBox](https://www.virtualbox.org/)
-- [Vagrant](https://www.vagrantup.com/)
+2. **Provisionamento com Vagrant:**
+    ```bash
+    vagrant up
+    ```
 
-Clone o repositório em seu ambiente local:
+3. **Acesso à Máquina Virtual Cliente:**
+    ```bash
+    vagrant ssh client
+    ```
 
-```bash
-git clone https://github.com/SIgorSs/Redes.git
-cd Redes
-```
+## Testando os Serviços
 
-Inicie as Máquinas Virtuais:
+### DHCP
+- **Verificação do IP na VM Cliente:**
+  ```bash
+  ip a
+  ```
+  A VM Cliente deve apresentar a rede `enp0s8` com um IP `192.168.56.X`.
 
-```bash
-cd dhcp-server
-vagrant up vm1
-```
+### DNS
+- **Teste do DNS:**
+  ```bash
+  cat /etc/resolv.conf
+  ```
 
-```bash
-cd dhcp-client
-vagrant up vm2
-```
+### Web (Apache)
+- **Acesso ao Servidor Web:**
+  Abra um navegador e acesse [http://192.168.56.7](http://192.168.56.7).
 
-Provisione as Máquinas Virtuais:
+### NFS
+- **Montagem do Compartilhamento NFS:**
+  ```bash
+  sudo mkdir /mnt/nfs
+  sudo mount -t nfs 192.168.56.7:/nfsshare /mnt/nfs
+  ls /mnt/nfs
+  ```
 
-```bash
-vagrant provision
-```
+### FTP
+- **Conexão ao Servidor FTP:**
+  ```bash
+  ftp 192.168.56.7 21
+  ```
 
-Acesse as Máquinas Virtuais:
+## Encerramento do Ambiente
 
-```bash
-vagrant ssh vm1
-
-```
-```bash
-vagrant ssh vm2
-
-```
-
-## Servidor DHCP
-
-O DHCP (Dynamic Host Configuration Protocol) é um protocolo de rede que permite que os dispositivos obtenham automaticamente um endereço IP e outras configurações de rede quando se conectam a uma rede.
-
-### Status do Servidor
-
-Para verificar o status do servidor DHCP, utilize o comando:
-
-```bash
-sudo systemctl status isc-dhcp-server
-
-```
-
-## Servidor DNS (Bind9)
-
-Um servidor DNS (Domain Name System) é responsável por converter nomes de domínio em endereços IP.
-
-### Status do Servidor
-
-Para verificar o status do servidor DNS, utilize o comando:
+Para desligar e remover todos os recursos, incluindo máquinas virtuais e containers Docker:
 
 ```bash
-sudo systemctl status bind9
-```
-
-Teste a Resolução de Nomes:
-
-```bash
-nslookup teste.com
-
-```
-
-## Servidor Apache
-
-O servidor Apache HTTP Server é um servidor web de código aberto utilizado para hospedar sites na Internet.
-
-### Teste do Servidor
-
-Abra o navegador nesta página: [http://192.168.50.1](http://192.168.50.1)
-
-### Status do Servidor
-
-Para verificar o status do servidor Apache, utilize o comando:
-
-```bash
-sudo systemctl status apache2
-
-```
-
-## Servidor FTP
-
-O servidor FTP é um protocolo de rede utilizado para transferir arquivos entre um cliente e um servidor.
-
-### Status do Servidor
-
-Para verificar o status do servidor FTP, utilize o comando:
-
-```bash
-sudo systemctl status vsftpd
-```
-
-### Transfira um Arquivo via FTP:
-
-Para tranferir um arquivo via FTP, utilize o comando::
-
-```bash
-ftp 192.168.50.1
-
-```
-
-## Servidor NFS
-
-O NFS é um protocolo de compartilhamento de arquivos que permite que um sistema operacional acesse arquivos em um servidor remoto como se estivessem localmente armazenados.
-
-### Status do Servidor
-
-Para verificar o status do servidor NFS, utilize o comando:
-
-```bash
-sudo systemctl status nfs-kernel-server
-```
-
-### Monte o Compartilhamento NFS no Cliente:
-
-```bash
-sudo mount ftp 192.168.50.1:/share /mnt/nfs-share
+vagrant destroy
 ```
